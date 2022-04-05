@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   post "/signup" do
     user = User.new(:username => params[:username], :email => params[:email], :password => params[:password])
         # binding.pry
+    # if !user.username.empty? && !user.email.empty? && !user.password.empty?
     if user.save
       redirect "/tweets"
     else
