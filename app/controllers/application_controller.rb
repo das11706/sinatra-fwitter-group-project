@@ -13,23 +13,49 @@ class ApplicationController < Sinatra::Base
     erb :index
   end
 
-  # get "/signup" do
-  #   erb :signup
-  # end
+  get "/signup" do
+    if !logged_in?
+    erb :'/users/create_user'
+    else 
+      redirect to "/tweets"
+    end
+  end
 
-  # post "/signup" do
-  #   user = User.new(:username => params[:username], :email => params[:email], :password => params[:password])
-  #   # binding.pry
-  #     if user.save
-  #       redirect "/tweets"
-  #     else
-  #       redirect "/signup"
-  #     end
-  # end
+  post "/signup" do
+    if params[:username] == "" || params[:email] == "" || params[:password] == ""
+      redirect to '/signup'
+    else
+    @user = User.new(:username => params[:username], :email => params[:email], :password => params[:password])
+    @user.save
+    session[:user_id] = @user.id 
+      redirect "/tweets"
+    end
+  end
 
-  # get '/tweets' do
-  #   "Hello World"
-  # end
+  get "/login" do
+    if !logged_in?
+    erb :'/users/login'
+    else
+      redirect "/tweets"
+    end
+  end
+
+  post "/login" do
+    @user = User.find_by(:username => params[:username])
+    # binding.pry
+    # if @user && @user.authenticate(params[:password])
+    if @user
+      session[:user_id] = @user.id 
+    redirect "/tweets"
+   else
+     redirect "/login"
+    end
+  end
+
+  get "/tweets" do
+    @user = User.find(session[:user_id])
+    erb :'/tweets/tweets'
+  end
 
   helpers do
     def logged_in?
