@@ -39,7 +39,7 @@ class ApplicationController < Sinatra::Base
       redirect "/tweets"
     end
   end
-
+  
   post "/login" do
     @user = User.find_by(:username => params[:username])
     # binding.pry
@@ -49,6 +49,17 @@ class ApplicationController < Sinatra::Base
     redirect "/tweets"
    else
      redirect "/login"
+    end
+  end
+
+  get "/logout" do
+    if logged_in?
+      session.clear
+      redirect "/login"
+    elsif !logged_in?
+      redirect "/"
+    else  
+      redirect "/login"
     end
   end
 
