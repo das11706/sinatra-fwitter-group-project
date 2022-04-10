@@ -1,0 +1,7 @@
+<title>Fwitter</title>
+<h4>User Tweets</h4>
+<ul>
+  <% @user.tweets.each do |tweet| %>
+    <li><%= tweet.content %></li>
+    <% end %>
+</ul>
