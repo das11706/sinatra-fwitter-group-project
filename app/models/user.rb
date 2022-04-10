@@ -7,7 +7,6 @@ class User < ActiveRecord::Base
 
 
   def slug
-    # username.downcase.gsub(" ", "-")
     username.downcase.gsub(" ", "-")
     # email.downcase.gsub(" ", "-")
     # password.downcase.gsub(" ", "-")
