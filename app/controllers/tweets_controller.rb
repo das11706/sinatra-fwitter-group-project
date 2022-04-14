@@ -12,8 +12,11 @@ class TweetsController < ApplicationController
   end
 
   get "/tweets/new" do
+    if logged_in?
+      # binding.pry
     @users = User.all
     erb :'/tweets/new'
+    end
   end
 
   get "/tweets/:id" do
@@ -23,19 +26,18 @@ class TweetsController < ApplicationController
   end
 
   post "/tweets" do
-    if logged_in?
-    if params[:content] == "" 
-     redirect to "/tweets/new"
-    else
-      @tweet = Tweet.create(params[:tweet])
-      @user = Tweet.find_by(params[:username])  
-      @tweet.user_id = @user.id
-      @tweet.save
-    end
-    redirect to "/tweets/:slug"
+    if logged_in?  
+        @tweet = Tweet.create(params[:tweet])
+        @user = User.create(username: params["username"], email: params["email"], password_digest: params["password"])
+        @tweet = Tweet.find_by(params[:content])
+        @user = Tweet.find_by(params[:username])  
+        @tweet.user_id = @user.id
+        @tweet.save
+      redirect to "/tweets/:slug"
+      elsif @tweet = Tweet.find_by(params[:content]) == nil
+        redirect to "/tweets/new"       
     end  
   end
-
 
   get "/tweets/:slug" do
     @tweet = Tweet.find_by_slug(params[:slug])
