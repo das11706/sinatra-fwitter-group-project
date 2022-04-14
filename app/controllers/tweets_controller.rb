@@ -1,5 +1,5 @@
 class TweetsController < ApplicationController
-
+  
   get "/tweets" do
     @tweets = Tweet.all
     # binding.pry 
@@ -24,15 +24,14 @@ class TweetsController < ApplicationController
 
   post "/tweets" do
     if logged_in?
-    @tweet = Tweet.create(params[:tweet])
-    # binding.pry
-    @user = User.create(username: params["username"], email: params["email"], password_digest: params["password"])
-    @tweet = Tweet.find_by(params[:content])
-    @user = Tweet.find_by(params[:username])
-    # @tweet.user = User.create(:username => "username", :email => "email", :password => "password")
-    # binding.pry
-    @tweet.user_id = @user.id
-    @tweet.save
+    if params[:content] == "" 
+     redirect to "/tweets/new"
+    else
+      @tweet = Tweet.create(params[:tweet])
+      @user = Tweet.find_by(params[:username])  
+      @tweet.user_id = @user.id
+      @tweet.save
+    end
     redirect to "/tweets/:slug"
     end  
   end
