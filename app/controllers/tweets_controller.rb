@@ -27,6 +27,9 @@ class TweetsController < ApplicationController
 
   post "/tweets" do
     if logged_in?  
+      if @tweet = Tweet.find_by(params[:content]) == nil
+       redirect to "/tweets/new"   
+      else    
         @tweet = Tweet.create(params[:tweet])
         @user = User.create(username: params["username"], email: params["email"], password_digest: params["password"])
         @tweet = Tweet.find_by(params[:content])
@@ -34,8 +37,7 @@ class TweetsController < ApplicationController
         @tweet.user_id = @user.id
         @tweet.save
       redirect to "/tweets/:slug"
-      elsif @tweet = Tweet.find_by(params[:content]) == nil
-        redirect to "/tweets/new"       
+      end  
     end  
   end
 
