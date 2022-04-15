@@ -70,13 +70,13 @@ class ApplicationController < Sinatra::Base
 
   helpers do
     def logged_in?
-      !!session[:user_id]
-      # !!current_user
+      # !!session[:user_id]
+      !!current_user
     end
 
     def current_user
-      User.find(session[:user_id])
-      # @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
+      # User.find(session[:user_id])
+      @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
       
     end
   end
@@ -84,3 +84,12 @@ class ApplicationController < Sinatra::Base
 end
 
 
+# helpers do
+#   def logged_in?
+#     !!session[:user_id]
+#   end
+
+#   def current_user
+#     User.find(session[:user_id])
+#   end
+# end
