@@ -36,24 +36,6 @@ class TweetsController < ApplicationController
     end
   end
 
-
-# post "/tweets" do
-#   if logged_in?  
-#     if params[:content] == ""
-#      redirect to "/tweets/new"   
-#     else   
-#       @tweet = current_user.tweets.build(params[:tweet]) 
-#      if @tweet.save
-#     redirect to "/tweets/:id"
-#     else
-#       redirect to "/tweets/new"
-#     end  
-#   end  
-#  else
-#   redirect to "/login"
-#  end
-# end
-
   # get "/tweets/:slug" do
   #   @tweet = Tweet.find_by_slug(params[:slug])
   #   erb :'/tweets/show_tweet'
