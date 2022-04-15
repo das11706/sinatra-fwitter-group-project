@@ -33,8 +33,8 @@ class TweetsController < ApplicationController
         @tweet = current_user.tweets.create(params[:tweet]) 
         redirect to "/tweets/new"
       end  
-    else
-      redirect to "/login"
+    # else
+    #   redirect to "/login"
     end
   end
 
