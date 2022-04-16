@@ -16,9 +16,11 @@ class TweetsController < ApplicationController
       # binding.pry
     @users = User.all
     erb :'/tweets/new'
+    else 
+      redirect to "/login"
     end
   end
-
+ 
   get "/tweets/:id" do
     @tweet = Tweet.find_by_id(params[:id])
     # binding.pry
