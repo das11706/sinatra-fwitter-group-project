@@ -11,10 +11,11 @@ class TweetsController < ApplicationController
   #   end
   # end
 
-  get "/tweets" do
+  get '/tweets' do
+    # binding.pry
     @tweets = Tweet.all
-    # binding.pry 
     if logged_in?
+      # binding.pry
     #   erb :'/users/login'
     erb :'/tweets/tweets'
     else
@@ -22,17 +23,17 @@ class TweetsController < ApplicationController
     end
   end
 
-  get "/tweets/new" do
+  get '/tweets/new' do
     if logged_in?
       # binding.pry
-    @users = User.all
+    users = User.all
     erb :'/tweets/new'
     else 
       redirect to "/login"
     end
   end
  
-  get "/tweets/:id" do
+  get '/tweets/:id' do
     if logged_in?
     @tweet = Tweet.find_by_id(params[:id])
     # binding.pry
@@ -42,7 +43,7 @@ class TweetsController < ApplicationController
     end
   end
 
-  post "/tweets" do
+  post '/tweets' do
     if logged_in?  
       if params[:content] == ""
        redirect to "/tweets/new"   
@@ -53,7 +54,7 @@ class TweetsController < ApplicationController
     end
   end
 
-  get "/tweets/:id/edit" do
+  get '/tweets/:id/edit' do
     if logged_in?
       @tweet = Tweet.find_by(params[:content])
     erb :'/tweets/edit_tweet'
@@ -62,10 +63,10 @@ class TweetsController < ApplicationController
     end
   end
 
-  get "/tweets/:id" do
-    @tweet = Tweet.find_by(params[:content])
-    erb :'/tweets/show_tweet'
-  end
+  # get '/tweets/:id' do
+  #   @tweet = Tweet.find_by(params[:content])
+  #   erb :'/tweets/show_tweet'
+  # end
 
   patch '/tweets/:id' do
     if logged_in?
